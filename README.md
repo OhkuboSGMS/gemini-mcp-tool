@@ -1,13 +1,19 @@
 
-# Gemini MCP Tool (Windows-compatible fork)
+# Gemini MCP Tool (Windows / VSCode対応版)
 
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-**Fork of [jamubc/gemini-mcp-tool](https://github.com/jamubc/gemini-mcp-tool)** with Windows `spawn ENOENT` fix ([PR #57](https://github.com/jamubc/gemini-mcp-tool/pull/57))
+**Fork of [jamubc/gemini-mcp-tool](https://github.com/jamubc/gemini-mcp-tool)** with Windows + VSCode extension fix ([PR #57](https://github.com/jamubc/gemini-mcp-tool/pull/57))
 
 </div>
+
+### What's different?
+
+The original `gemini-mcp-tool` uses `child_process.spawn("gemini")` which fails on Windows because the Gemini CLI is installed as `gemini.cmd`. This is especially problematic in **VSCode extensions** (e.g. Claude Code VSCode) where the shell environment differs from a regular terminal.
+
+This fork replaces `spawn` with [`cross-spawn`](https://www.npmjs.com/package/cross-spawn) to transparently resolve `.cmd` files on Windows.
 
 This is a simple Model Context Protocol (MCP) server that allows AI assistants to interact with the [Gemini CLI](https://github.com/google-gemini/gemini-cli). It enables the AI to leverage the power of Gemini's massive token window for large analysis, especially with large files and codebases using the `@` syntax for direction.
 
