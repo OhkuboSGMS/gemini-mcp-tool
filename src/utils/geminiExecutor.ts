@@ -90,13 +90,9 @@ ${prompt_processed}
   const args = [];
   if (model) { args.push(CLI.FLAGS.MODEL, model); }
   if (sandbox) { args.push(CLI.FLAGS.SANDBOX); }
-  
-  // Ensure @ symbols work cross-platform by wrapping in quotes if needed
-  const finalPrompt = prompt_processed.includes('@') && !prompt_processed.startsWith('"') 
-    ? `"${prompt_processed}"` 
-    : prompt_processed;
-    
-  args.push(CLI.FLAGS.PROMPT, finalPrompt);
+
+  // Use positional prompt instead of deprecated -p flag (removed in Gemini CLI v0.18+)
+  args.push(prompt_processed);
   
   try {
     return await executeCommand(CLI.COMMANDS.GEMINI, args, onProgress);
@@ -110,13 +106,9 @@ ${prompt_processed}
       if (sandbox) {
         fallbackArgs.push(CLI.FLAGS.SANDBOX);
       }
-      
-      // Same @ symbol handling for fallback
-      const fallbackPrompt = prompt_processed.includes('@') && !prompt_processed.startsWith('"') 
-        ? `"${prompt_processed}"` 
-        : prompt_processed;
-        
-      fallbackArgs.push(CLI.FLAGS.PROMPT, fallbackPrompt);
+
+      // Use positional prompt instead of deprecated -p flag
+      fallbackArgs.push(prompt_processed);
       try {
         const result = await executeCommand(CLI.COMMANDS.GEMINI, fallbackArgs, onProgress);
         Logger.warn(`Successfully executed with ${MODELS.FLASH} fallback.`);

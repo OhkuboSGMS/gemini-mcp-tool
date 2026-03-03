@@ -1,4 +1,4 @@
-import { spawn } from "child_process";
+import spawn from "cross-spawn";
 import { Logger } from "./logger.js";
 
 export async function executeCommand(
@@ -21,7 +21,7 @@ export async function executeCommand(
     let isResolved = false;
     let lastReportedLength = 0;
     
-    childProcess.stdout.on("data", (data) => {
+    childProcess.stdout!.on("data", (data) => {
       stdout += data.toString();
       
       // Report new content if callback provided
@@ -34,7 +34,7 @@ export async function executeCommand(
 
 
     // CLI level errors
-    childProcess.stderr.on("data", (data) => {
+    childProcess.stderr!.on("data", (data) => {
       stderr += data.toString();
       // find RESOURCE_EXHAUSTED when gemini-2.5-pro quota is exceeded
       if (stderr.includes("RESOURCE_EXHAUSTED")) {
