@@ -1,17 +1,13 @@
 
-# Gemini MCP Tool
+# Gemini MCP Tool (Windows-compatible fork)
 
 <div align="center">
 
-[![GitHub Release](https://img.shields.io/github/v/release/jamubc/gemini-mcp-tool?logo=github&label=GitHub)](https://github.com/jamubc/gemini-mcp-tool/releases)
-[![npm version](https://img.shields.io/npm/v/gemini-mcp-tool)](https://www.npmjs.com/package/gemini-mcp-tool)
-[![npm downloads](https://img.shields.io/npm/dt/gemini-mcp-tool)](https://www.npmjs.com/package/gemini-mcp-tool)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Open Source](https://img.shields.io/badge/Open%20Source-❤️-red.svg)](https://github.com/jamubc/gemini-mcp-tool)
+
+**Fork of [jamubc/gemini-mcp-tool](https://github.com/jamubc/gemini-mcp-tool)** with Windows `spawn ENOENT` fix ([PR #57](https://github.com/jamubc/gemini-mcp-tool/pull/57))
 
 </div>
-
-> 📚 **[View Full Documentation](https://jamubc.github.io/gemini-mcp-tool/)** - Search me!, Examples, FAQ, Troubleshooting, Best Practices
 
 This is a simple Model Context Protocol (MCP) server that allows AI assistants to interact with the [Gemini CLI](https://github.com/google-gemini/gemini-cli). It enables the AI to leverage the power of Gemini's massive token window for large analysis, especially with large files and codebases using the `@` syntax for direction.
 
@@ -37,8 +33,10 @@ Before using this tool, ensure you have:
 ### One-Line Setup
 
 ```bash
-claude mcp add gemini-cli -- npx -y gemini-mcp-tool
+claude mcp add gemini-cli -- npx -y github:OhkuboSGMS/gemini-mcp-tool
 ```
+
+> **Note:** This fork includes [PR #57](https://github.com/jamubc/gemini-mcp-tool/pull/57) which fixes Windows compatibility (`spawn ENOENT`) using `cross-spawn`.
 
 ### Verify Installation
 
@@ -46,51 +44,16 @@ Type `/mcp` inside Claude Code to verify the gemini-cli MCP is active.
 
 ---
 
-### Alternative: Import from Claude Desktop
+### Alternative: JSON config
 
-If you already have it configured in Claude Desktop:
-
-1. Add to your Claude Desktop config:
-```json
-"gemini-cli": {
-  "command": "npx",
-  "args": ["-y", "gemini-mcp-tool"]
-}
-```
-
-2. Import to Claude Code:
-```bash
-claude mcp add-from-claude-desktop
-```
-
-## Configuration
-
-Register the MCP server with your MCP client:
-
-### For NPX Usage (Recommended)
-
-Add this configuration to your Claude Desktop config file:
+Add to your Claude Desktop or `~/.claude.json`:
 
 ```json
 {
   "mcpServers": {
-    "gemini-cli": {
+    "gemini": {
       "command": "npx",
-      "args": ["-y", "gemini-mcp-tool"]
-    }
-  }
-}
-```
-
-### For Global Installation
-
-If you installed globally, use this configuration instead:
-
-```json
-{
-  "mcpServers": {
-    "gemini-cli": {
-      "command": "gemini-mcp"
+      "args": ["-y", "github:OhkuboSGMS/gemini-mcp-tool"]
     }
   }
 }
